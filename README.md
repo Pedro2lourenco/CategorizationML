@@ -1,99 +1,95 @@
-# Obesity Level Prediction using Logistic Regression
+# Previsão do Nível de Obesidade usando Regressão Logística
 
-## Overview
+## Visão Geral
 
-This project applies machine learning techniques to predict obesity levels based on lifestyle and physical attributes. The dataset is preprocessed using normalization and encoding methods, and two multiclass classification strategies are evaluated:
+Este projeto aplica técnicas de aprendizado de máquina para prever os níveis de obesidade com base no estilo de vida e em atributos físicos. O conjunto de dados é pré-processado utilizando métodos de normalização e codificação, e duas estratégias de classificação multiclasse são avaliadas:
 
-* One-vs-Rest (OvR)
-* One-vs-One (OvO)
+* Um-contra-Todos (OvR - *One-vs-Rest*)
+* Um-contra-Um (OvO - *One-vs-One*)
 
-Both approaches use Logistic Regression as the base classifier.
-
----
-
-## Dataset
-
-The dataset is loaded directly from an online source and contains:
-
-* Numerical features (e.g., age, height, weight)
-* Categorical features (e.g., eating habits, physical activity)
-* Target variable: `NObeyesdad` (obesity level classification)
+Ambas as abordagens utilizam a Regressão Logística como classificador base.
 
 ---
 
-## Data Preprocessing
+## Conjunto de Dados
 
-### 1. Handling Numerical Features
+O conjunto de dados é carregado diretamente de uma fonte online e contém:
 
-* Numerical columns are identified using `float64` dtype.
-* Standardization is applied using `StandardScaler`:
-
-  * Mean = 0
-  * Standard deviation = 1
-
-### 2. Handling Categorical Features
-
-* Categorical variables are identified using `object` dtype.
-* Target column (`NObeyesdad`) is excluded from encoding.
-* One-Hot Encoding is applied using `OneHotEncoder`:
-
-  * `drop='first'` avoids multicollinearity.
-
-### 3. Target Encoding
-
-* The target variable is converted into numerical categories using `.cat.codes`.
+* Variáveis numéricas (ex: idade, altura, peso)
+* Variáveis categóricas (ex: hábitos alimentares, atividade física)
+* Variável alvo: `NObeyesdad` (classificação do nível de obesidade)
 
 ---
 
-## Feature and Target Separation
+## Pré-processamento de Dados
 
-* Features (`X`): All columns except `NObeyesdad`
-* Target (`y`): Encoded obesity levels
+### 1. Tratamento de Variáveis Numéricas
+
+* As colunas numéricas são identificadas usando o tipo de dado `float64`.
+* A padronização é aplicada usando o `StandardScaler`:
+  * Média = 0
+  * Desvio padrão = 1
+
+### 2. Tratamento de Variáveis Categóricas
+
+* As variáveis categóricas são identificadas usando o tipo de dado `object`.
+* A coluna alvo (`NObeyesdad`) é excluída da codificação.
+* A codificação *One-Hot* é aplicada usando o `OneHotEncoder`:
+  * `drop='first'` evita a multicolinearidade.
+
+### 3. Codificação da Variável Alvo
+
+* A variável alvo é convertida em categorias numéricas usando `.cat.codes`.
 
 ---
 
-## Train-Test Split
+## Separação entre *Features* e Variável Alvo
 
-* Data is split into training and testing sets:
-
-  * Training set: 67%
-  * Test set: 33%
-* `random_state=42` ensures reproducibility
+* *Features* (`X`): Todas as colunas, exceto `NObeyesdad`
+* Alvo (`y`): Níveis de obesidade codificados
 
 ---
 
-## Models
+## Divisão em Treino e Teste
 
-### 1. One-vs-Rest (OvR)
+* Os dados são divididos em conjuntos de treinamento e teste:
+  * Conjunto de treinamento: 67%
+  * Conjunto de teste: 33%
+* `random_state=42` garante a reprodutibilidade.
 
-* Uses `LogisticRegression` with:
+---
 
+## Modelos
+
+### 1. Um-contra-Todos (OvR - *One-vs-Rest*)
+
+* Utiliza `LogisticRegression` com:
   * `multi_class='ovr'`
   * `max_iter=1000`
-* Trains one classifier per class against all others
+* Treina um classificador por classe contra todas as outras.
 
-### 2. One-vs-One (OvO)
+### 2. Um-contra-Um (OvO - *One-vs-One*)
 
-* Uses `OneVsOneClassifier` with Logistic Regression
-* Trains one classifier for every pair of classes
+* Utiliza `OneVsOneClassifier` com Regressão Logística.
+* Treina um classificador para cada par de classes.
 
 ---
 
-## Evaluation
+## Avaliação
 
-* Predictions are made on the test set
-* Performance is measured using accuracy score
+* As previsões são feitas no conjunto de teste.
+* O desempenho é medido usando a métrica de acurácia (*accuracy score*).
 
 ```python
-print(accuracy_score(ytest, y_pred))     # OvR accuracy
-print(accuracy_score(ytest, yovo_pred))  # OvO accuracy
+print(accuracy_score(ytest, y_pred))     # Acurácia OvR
+print(accuracy_score(ytest, yovo_pred))  # Acurácia OvO
 ```
 
 ---
 
-## Libraries Used
+## Bibliotecas Utilizadas
 
-``` bash
+```bash
 * pandas
 * numpy
 * matplotlib
@@ -103,22 +99,20 @@ print(accuracy_score(ytest, yovo_pred))  # OvO accuracy
 
 ---
 
-## Key Concepts
+## Conceitos-Chave
 
-* Data normalization
-* One-hot encoding
-* Multiclass classification strategies
-* Logistic regression
-* Model evaluation using accuracy
-
----
-
-## Possible Improvements
-
-* Hyperparameter tuning (e.g., regularization strength)
-* Cross-validation
-* Trying other classifiers (Random Forest, SVM, Gradient Boosting)
-* Feature selection or dimensionality reduction
-* Handling class imbalance if present
+* Normalização de dados
+* Codificação *One-hot*
+* Estratégias de classificação multiclasse
+* Regressão logística
+* Avaliação de modelo usando acurácia
 
 ---
+
+## Possíveis Melhorias
+
+* Ajuste de hiperparâmetros (ex: força de regularização)
+* Validação cruzada (*Cross-validation*)
+* Testar outros classificadores (Random Forest, SVM, Gradient Boosting)
+* Seleção de *features* ou redução de dimensionalidade
+* Tratamento de desbalanceamento de classes, se presente
