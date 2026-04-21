@@ -93,11 +93,13 @@ print(accuracy_score(ytest, yovo_pred))  # OvO accuracy
 
 ## Libraries Used
 
+``` bash
 * pandas
 * numpy
 * matplotlib
 * seaborn
 * scikit-learn
+```
 
 ---
 
